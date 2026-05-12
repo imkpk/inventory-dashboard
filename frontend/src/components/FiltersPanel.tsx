@@ -1,4 +1,14 @@
-import { Button, Card, CardContent, FormControl, InputLabel, MenuItem, Select, Stack, TextField } from '@mui/material';
+import {
+  Button,
+  Card,
+  CardContent,
+  FormControl,
+  InputLabel,
+  MenuItem,
+  Select,
+  Stack,
+  TextField
+} from '@mui/material';
 import DownloadIcon from '@mui/icons-material/Download';
 import type { MovementFilterType, MovementFilters } from '../types/movement';
 
@@ -9,54 +19,67 @@ interface FiltersPanelProps {
   isExportDisabled: boolean;
 }
 
-export function FiltersPanel({ filters, onChange, onExport, isExportDisabled }: FiltersPanelProps) {
+export function FiltersPanel({
+  filters,
+  onChange,
+  onExport,
+  isExportDisabled
+}: FiltersPanelProps) {
   return (
-    <Card elevation={1}>
+    <Card elevation={1} sx={{ bgcolor: '#f5f5f5' }}>
       <CardContent>
-        <Stack direction={{ xs: 'column', md: 'row' }} spacing={2} alignItems={{ xs: 'stretch', md: 'center' }}>
+        <Stack
+          direction={{ xs: 'column', md: 'row' }}
+          spacing={2}
+          alignItems={{ xs: 'stretch', md: 'center' }}>
           <TextField
-            label="From"
-            type="date"
+            label='From'
+            type='date'
             value={filters.from}
-            onChange={(event) => onChange({ ...filters, from: event.target.value })}
+            onChange={(event) =>
+              onChange({ ...filters, from: event.target.value })
+            }
             InputLabelProps={{ shrink: true }}
             required
             fullWidth
           />
 
           <TextField
-            label="To"
-            type="date"
+            label='To'
+            type='date'
             value={filters.to}
-            onChange={(event) => onChange({ ...filters, to: event.target.value })}
+            onChange={(event) =>
+              onChange({ ...filters, to: event.target.value })
+            }
             InputLabelProps={{ shrink: true }}
             required
             fullWidth
           />
 
           <FormControl fullWidth>
-            <InputLabel id="movement-type-label">Movement Type</InputLabel>
+            <InputLabel id='movement-type-label'>Movement Type</InputLabel>
             <Select
-              labelId="movement-type-label"
-              label="Movement Type"
+              labelId='movement-type-label'
+              label='Movement Type'
               value={filters.type}
               onChange={(event) =>
-                onChange({ ...filters, type: event.target.value as MovementFilterType })
-              }
-            >
-              <MenuItem value="ALL">All</MenuItem>
-              <MenuItem value="IN">IN</MenuItem>
-              <MenuItem value="OUT">OUT</MenuItem>
+                onChange({
+                  ...filters,
+                  type: event.target.value as MovementFilterType
+                })
+              }>
+              <MenuItem value='ALL'>All</MenuItem>
+              <MenuItem value='IN'>IN</MenuItem>
+              <MenuItem value='OUT'>OUT</MenuItem>
             </Select>
           </FormControl>
 
           <Button
-            variant="contained"
+            variant='contained'
             startIcon={<DownloadIcon />}
             onClick={onExport}
             disabled={isExportDisabled}
-            sx={{ minWidth: 160 }}
-          >
+            sx={{ minWidth: 160 }}>
             Export CSV
           </Button>
         </Stack>
