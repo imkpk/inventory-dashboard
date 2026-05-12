@@ -1,4 +1,4 @@
-import { Card, CardContent, Grid, Typography, Box } from '@mui/material';
+import { Card, CardContent, Typography, Box } from '@mui/material';
 import dayjs from 'dayjs';
 import {
   Area,
@@ -65,13 +65,23 @@ function buildTimeSeriesData(movements: StockMovement[]): TimeSeriesBucket[] {
     buckets.set(date, existing);
   });
 
-  return Array.from(buckets.values()).sort((a, b) => a.date.localeCompare(b.date));
+  return Array.from(buckets.values()).sort((a, b) =>
+    a.date.localeCompare(b.date)
+  );
 }
 
 function EmptyChartState() {
   return (
-    <Box sx={{ height: 260, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-      <Typography color="text.secondary">No data for selected filters</Typography>
+    <Box
+      sx={{
+        height: 260,
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center'
+      }}>
+      <Typography color='text.secondary'>
+        No data for selected filters
+      </Typography>
     </Box>
   );
 }
@@ -81,11 +91,12 @@ export function Charts({ movements }: ChartsProps) {
   const timeSeriesData = buildTimeSeriesData(movements);
 
   return (
-    <Grid container spacing={2}>
-      <Grid item xs={12} md={5}>
-        <Card elevation={1}>
+    <Box
+      sx={{ display: 'flex', gap: 2, flexWrap: 'wrap', alignItems: 'stretch' }}>
+      <Box sx={{ flex: { xs: '1 1 100%', md: '0 0 calc(41.666% - 8px)' } }}>
+        <Card elevation={1} sx={{ bgcolor: '#f5f5f5', height: '100%' }}>
           <CardContent>
-            <Typography variant="h6" sx={{ mb: 2 }}>
+            <Typography variant='h6' sx={{ mb: 2 }}>
               Quantity IN vs OUT
             </Typography>
 
@@ -93,11 +104,19 @@ export function Charts({ movements }: ChartsProps) {
               <EmptyChartState />
             ) : (
               <Box sx={{ height: 280 }}>
-                <ResponsiveContainer width="100%" height="100%">
+                <ResponsiveContainer width='100%' height='100%'>
                   <PieChart>
-                    <Pie data={pieData} dataKey="value" nameKey="name" outerRadius={90} label>
+                    <Pie
+                      data={pieData}
+                      dataKey='value'
+                      nameKey='name'
+                      outerRadius={90}
+                      label>
                       {pieData.map((_, index) => (
-                        <Cell key={index} fill={COLORS[index % COLORS.length]} />
+                        <Cell
+                          key={index}
+                          fill={COLORS[index % COLORS.length]}
+                        />
                       ))}
                     </Pie>
                     <Tooltip />
@@ -108,12 +127,12 @@ export function Charts({ movements }: ChartsProps) {
             )}
           </CardContent>
         </Card>
-      </Grid>
+      </Box>
 
-      <Grid item xs={12} md={7}>
-        <Card elevation={1}>
+      <Box sx={{ flex: { xs: '1 1 100%', md: '0 0 calc(58.333% - 8px)' } }}>
+        <Card elevation={1} sx={{ bgcolor: '#f5f5f5', height: '100%' }}>
           <CardContent>
-            <Typography variant="h6" sx={{ mb: 2 }}>
+            <Typography variant='h6' sx={{ mb: 2 }}>
               Daily Movement Quantity
             </Typography>
 
@@ -121,22 +140,34 @@ export function Charts({ movements }: ChartsProps) {
               <EmptyChartState />
             ) : (
               <Box sx={{ height: 280 }}>
-                <ResponsiveContainer width="100%" height="100%">
+                <ResponsiveContainer width='100%' height='100%'>
                   <AreaChart data={timeSeriesData}>
-                    <CartesianGrid strokeDasharray="3 3" />
-                    <XAxis dataKey="date" />
+                    <CartesianGrid strokeDasharray='3 3' />
+                    <XAxis dataKey='date' />
                     <YAxis allowDecimals={false} />
                     <Tooltip />
                     <Legend />
-                    <Area type="monotone" dataKey="IN" stroke="#2e7d32" fill="#2e7d32" fillOpacity={0.15} />
-                    <Area type="monotone" dataKey="OUT" stroke="#ed6c02" fill="#ed6c02" fillOpacity={0.15} />
+                    <Area
+                      type='monotone'
+                      dataKey='IN'
+                      stroke='#2e7d32'
+                      fill='#2e7d32'
+                      fillOpacity={0.15}
+                    />
+                    <Area
+                      type='monotone'
+                      dataKey='OUT'
+                      stroke='#ed6c02'
+                      fill='#ed6c02'
+                      fillOpacity={0.15}
+                    />
                   </AreaChart>
                 </ResponsiveContainer>
               </Box>
             )}
           </CardContent>
         </Card>
-      </Grid>
-    </Grid>
+      </Box>
+    </Box>
   );
 }

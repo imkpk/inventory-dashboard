@@ -62,6 +62,7 @@ Thumbs.db
 coverage/
 frontend/coverage/
 backend/coverage/
+backend/.github/
 .nyc_output/
 
 # =========================
@@ -76,3 +77,4 @@ pnpm-debug.log*
 # Misc
 # =========================
 *.zip
+.github

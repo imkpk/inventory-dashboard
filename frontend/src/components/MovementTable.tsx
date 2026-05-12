@@ -1,4 +1,4 @@
-import { Card, CardContent, Chip, Typography } from '@mui/material';
+import { Box, Card, CardContent, Chip, Typography } from '@mui/material';
 import { DataGrid, GridColDef, GridToolbar } from '@mui/x-data-grid';
 import dayjs from 'dayjs';
 import type { StockMovement } from '../types/movement';
@@ -30,9 +30,9 @@ const columns: GridColDef<StockMovement>[] = [
     renderCell: (params) => (
       <Chip
         label={params.value}
-        size="small"
+        size='small'
         color={params.value === 'IN' ? 'success' : 'warning'}
-        variant="outlined"
+        variant='outlined'
       />
     )
   },
@@ -47,12 +47,13 @@ const columns: GridColDef<StockMovement>[] = [
 
 export function MovementTable({ rows, isLoading }: MovementTableProps) {
   return (
-    <Card elevation={1}>
+    <Card elevation={1} sx={{ bgcolor: '#f5f5f5' }}>
       <CardContent>
-        <Typography variant="h6" sx={{ mb: 2 }}>
+        <Typography variant='h6' sx={{ mb: 2 }}>
           Stock Movements
         </Typography>
 
+        {/* <Box sx={{ display: 'flex', flexDirection: 'column', height: 400 }}> */}
         <DataGrid
           rows={rows}
           columns={columns}
@@ -84,8 +85,15 @@ export function MovementTable({ rows, isLoading }: MovementTableProps) {
             }
           }}
           disableRowSelectionOnClick
-          autoHeight
+          sx={{
+            flex: 1,
+            '& .MuiDataGrid-toolbarContainer': {
+              justifyContent: 'flex-start',
+              gap: 1
+            }
+          }}
         />
+        {/* </Box> */}
       </CardContent>
     </Card>
   );

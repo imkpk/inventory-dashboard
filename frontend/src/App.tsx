@@ -1,5 +1,18 @@
-import { Alert, Box, Container, CssBaseline, Stack, ThemeProvider, Typography, createTheme } from '@mui/material';
-import { QueryClient, QueryClientProvider, useQuery } from '@tanstack/react-query';
+import {
+  Alert,
+  Box,
+  Container,
+  CssBaseline,
+  Stack,
+  ThemeProvider,
+  Typography,
+  createTheme
+} from '@mui/material';
+import {
+  QueryClient,
+  QueryClientProvider,
+  useQuery
+} from '@tanstack/react-query';
 import dayjs from 'dayjs';
 import { fetchMovements, getCsvExportUrl } from './api/movementsApi';
 import { Charts } from './components/Charts';
@@ -28,7 +41,9 @@ const defaultFilters: MovementFilters = {
 function DashboardPage() {
   const [filters, setFilters] = useState<MovementFilters>(defaultFilters);
 
-  const isDateRangeValid = Boolean(filters.from && filters.to) && !dayjs(filters.from).isAfter(dayjs(filters.to));
+  const isDateRangeValid =
+    Boolean(filters.from && filters.to) &&
+    !dayjs(filters.from).isAfter(dayjs(filters.to));
 
   const {
     data: movements = [],
@@ -46,39 +61,47 @@ function DashboardPage() {
   };
 
   return (
-    <Container maxWidth="xl" sx={{ py: 4 }}>
-      <Stack spacing={3}>
-        <Box>
-          <Typography variant="h4" fontWeight={700}>
-            Inventory Movement Dashboard
-          </Typography>
-          <Typography variant="body1" color="text.secondary">
-            Filter warehouse stock movements, view charts, and export the full filtered dataset.
-          </Typography>
-        </Box>
+    <Box sx={{ bgcolor: '#fafafa', minHeight: '100vh', py: 4 }}>
+      <Container maxWidth='xl' sx={{ px: { xs: 2, sm: 3, md: 4 } }}>
+        <Stack spacing={3}>
+          <Box>
+            <Typography variant='h4' fontWeight={700}>
+              Inventory Movement Dashboard
+            </Typography>
+            <Typography variant='body1' color='text.secondary'>
+              Filter warehouse stock movements, view charts, and export the full
+              filtered dataset.
+            </Typography>
+          </Box>
 
-        <FiltersPanel
-          filters={filters}
-          onChange={setFilters}
-          onExport={handleExport}
-          isExportDisabled={!isDateRangeValid || movements.length === 0}
-        />
+          <FiltersPanel
+            filters={filters}
+            onChange={setFilters}
+            onExport={handleExport}
+            isExportDisabled={!isDateRangeValid || movements.length === 0}
+          />
 
-        {!isDateRangeValid && (
-          <Alert severity="warning">Please select a valid date range. From date cannot be after To date.</Alert>
-        )}
+          {!isDateRangeValid && (
+            <Alert severity='warning'>
+              Please select a valid date range. From date cannot be after To
+              date.
+            </Alert>
+          )}
 
-        {isError && (
-          <Alert severity="error">
-            {error instanceof Error ? error.message : 'Failed to load stock movements'}
-          </Alert>
-        )}
+          {isError && (
+            <Alert severity='error'>
+              {error instanceof Error
+                ? error.message
+                : 'Failed to load stock movements'}
+            </Alert>
+          )}
 
-        <Charts movements={movements} />
+          <Charts movements={movements} />
 
-        <MovementTable rows={movements} isLoading={isFetching} />
-      </Stack>
-    </Container>
+          <MovementTable rows={movements} isLoading={isFetching} />
+        </Stack>
+      </Container>
+    </Box>
   );
 }
 
