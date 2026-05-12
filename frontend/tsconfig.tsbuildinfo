@@ -1,0 +1,1 @@
+{"root":["./src/app.tsx","./src/main.tsx","./src/api/movementsapi.ts","./src/components/charts.tsx","./src/components/filterspanel.tsx","./src/components/movementtable.tsx","./src/types/movement.ts"],"version":"5.9.3"}
