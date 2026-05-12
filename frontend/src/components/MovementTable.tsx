@@ -1,5 +1,5 @@
 import { Card, CardContent, Chip, Typography } from '@mui/material';
-import { DataGrid, GridColDef } from '@mui/x-data-grid';
+import { DataGrid, GridColDef, GridToolbar } from '@mui/x-data-grid';
 import dayjs from 'dayjs';
 import type { StockMovement } from '../types/movement';
 
@@ -58,6 +58,22 @@ export function MovementTable({ rows, isLoading }: MovementTableProps) {
           columns={columns}
           loading={isLoading}
           getRowId={(row) => row.id}
+          checkboxSelection
+          sortingOrder={['asc', 'desc']}
+          slots={{
+            toolbar: GridToolbar
+          }}
+          slotProps={{
+            toolbar: {
+              showQuickFilter: true,
+              csvOptions: {
+                fileName: 'stock-movements'
+              },
+              printOptions: {
+                disableToolbarButton: true
+              }
+            }
+          }}
           pageSizeOptions={[10]}
           initialState={{
             pagination: {
