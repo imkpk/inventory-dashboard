@@ -62,7 +62,7 @@ Thumbs.db
 coverage/
 frontend/coverage/
 backend/coverage/
-backend/.github/
+# backend/.github/
 .nyc_output/
 
 # =========================
